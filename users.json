@@ -3,5 +3,10 @@
     "username": "admin",
     "password": "$2b$10$iGsZfr2.wXymFAumaOUxteH9xVHsMer7HmnXHeVNMaMUs2xbvcvAK",
     "role": "admin"
+  },
+  {
+    "username": "crazygirl",
+    "password": "$2b$10$dz67FUdgaOOGdMea64zAQuSSL079WvUMAJFQkHsKrwIHzs/1/ALvq",
+    "role": "user"
   }
 ]
