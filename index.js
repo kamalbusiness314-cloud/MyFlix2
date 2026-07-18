@@ -13,6 +13,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 const USERS_FILE = path.join(__dirname, "users.json");
 
+console.log("USERS_FILE:", USERS_FILE);
+console.log("EXISTS:", fs.existsSync(USERS_FILE));
 app.use(express.json());
 
 app.use(session({
