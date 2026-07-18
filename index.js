@@ -1,0 +1,120 @@
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
+const session = require("express-session");
+const bcrypt = require("bcryptjs");
+const multer = require("multer");
+const app = express();
+const PORT = 3001;
+const storage = multer.diskStorage({
+  destination: "uploads/",
+  filename: (req, file, cb) => cb(null, file.originalname)
+});
+const upload = multer({ storage });
+const USERS_FILE = path.join(__dirname, "users.json");
+
+app.use(express.json());
+
+app.use(session({
+  secret: "myflix2_secret_key",
+  resave: false,
+  saveUninitialized: false
+}));
+
+function getUsers() {
+  if (!fs.existsSync(USERS_FILE)) {
+    fs.writeFileSync(USERS_FILE, "[]");
+  }
+  return JSON.parse(fs.readFileSync(USERS_FILE, "utf8"));
+}
+
+function saveUsers(users) {
+  fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
+}
+
+app.post("/signup", async (req, res) => {
+  const { username, password } = req.body;
+
+  let users = getUsers();
+
+  if (users.find(u => u.username === username)) {
+    return res.json({
+      success: false,
+      message: "Username already exists"
+    });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  users.push({
+    username,
+    password: hashedPassword
+  });
+
+  saveUsers(users);
+
+  req.session.user = username;
+
+  res.json({
+    success: true
+  });
+});
+
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  let users = getUsers();
+
+  const user = users.find(u => u.username === username);
+
+  if (!user) {
+    return res.json({
+      success: false,
+      message: "User not found"
+    });
+  }
+
+  const match = await bcrypt.compare(password, user.password);
+
+  if (!match) {
+    return res.json({
+      success: false,
+      message: "Wrong password"
+    });
+  }
+
+  req.session.user = username;
+
+  res.json({
+    success: true
+  });
+});
+
+app.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/login.html");
+  });
+});
+
+app.get("/index.html", (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/login.html");
+  }
+
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static("uploads"));
+app.get("/", (req, res) => {
+  res.redirect("/login.html");
+});
+app.post("/upload", upload.single("movie"), (req, res) => {
+console.log(req.file);
+  res.send("Movie upload ho gayi.");
+});
+app.listen(PORT, () => {
+  console.log(`MyFlix2 running on http://localhost:${PORT}`);
+});
+
+
