@@ -80,7 +80,7 @@ console.log(users);
     });
   }
 
-  const match = password === user.password;
+  const match = await bcrypt.compare(password, user.password);
 console.log(password);
 console.log(match);
 
