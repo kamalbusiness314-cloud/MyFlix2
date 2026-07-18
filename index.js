@@ -113,6 +113,9 @@ app.get("/", (req, res) => {
   res.redirect("/login.html");
 });
 app.post("/upload", upload.single("movie"), (req, res) => {
+if (req.session.user !== "alyx16164") {
+  return res.send("Upload sirf Admin kar sakta hai");
+}
 console.log(req.file);
   res.send("Movie upload ho gayi.");
 });

@@ -1,6 +1,12 @@
 [
   {
-    "username": "gokul",
-    "password": "$2b$10$4z22wszXUt44f0iJri3rUuuNagicliBRSipV7pIXz/BT8AoAHVWdC"
+    "username": "alyx16164",
+    "password": "$2b$10$wH41RXwpaalgPUWsz.veVey2YVINGQcSDpasHrz0fxFmoKe/pruUS",
+    "role": "admin"
+  },
+  {
+    "username": "Vincenzo 10",
+    "password": "$2b$10$QdM/kd/SuzNM36OGukxVLuaVUIBs/JXQQQIx4Y3pJiKgEapnsSjF.",
+    "role": "user"
   }
 ]
