@@ -128,6 +128,16 @@ if (req.session.user !== "alyx16164") {
 }
 console.log(req.file);
   res.send("Movie upload ho gayi.");
+const movies = fs.existsSync("movies.json")
+  ? JSON.parse(fs.readFileSync("movies.json", "utf8"))
+  : [];
+
+movies.push({
+  filename: req.file.filename,
+  originalname: req.file.originalname
+});
+
+fs.writeFileSync("movies.json", JSON.stringify(movies, null, 2));
 });
 app.get("/admin", (req, res) => {
   if (!req.session.user) {
