@@ -37,6 +37,7 @@ return res.json({ success: false, message: "Signup is disabled" });
   const { username, password } = req.body;
 
   let users = getUsers();
+console.log(users);
 
   if (users.find(u => u.username === username)) {
     return res.json({
@@ -66,6 +67,7 @@ app.post("/login", async (req, res) => {
 
   let users = getUsers();
 
+console.log(users);
   const user = users.find(u => u.username === username);
 
   if (!user) {
@@ -75,7 +77,9 @@ app.post("/login", async (req, res) => {
     });
   }
 
-  const match = await bcrypt.compare(password, user.password);
+  const match = password === user.password;
+console.log(password);
+console.log(match);
 
   if (!match) {
     return res.json({
@@ -118,6 +122,13 @@ if (req.session.user !== "alyx16164") {
 }
 console.log(req.file);
   res.send("Movie upload ho gayi.");
+});
+app.get("/admin", (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/login.html");
+  }
+
+  res.send("Welcome Admin");
 });
 app.listen(PORT, () => {
   console.log(`MyFlix2 running on http://localhost:${PORT}`);
