@@ -123,7 +123,7 @@ app.get("/", (req, res) => {
   res.redirect("/login.html");
 });
 app.post("/upload", upload.single("movie"), (req, res) => {
-if (req.session.user !== "alyx16164") {
+if (req.session.user !== "admin") {
   return res.send("Upload sirf Admin kar sakta hai");
 }
 console.log(req.file);
