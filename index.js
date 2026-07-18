@@ -33,6 +33,7 @@ function saveUsers(users) {
 }
 
 app.post("/signup", async (req, res) => {
+return res.json({ success: false, message: "Signup is disabled" });
   const { username, password } = req.body;
 
   let users = getUsers();
