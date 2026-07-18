@@ -130,11 +130,11 @@ console.log(req.file);
 const movies = fs.existsSync("movies.json")
   ? JSON.parse(fs.readFileSync("movies.json", "utf8"))
   : [];
-
 movies.push({
   filename: req.file.filename,
   originalname: req.file.originalname
 });
+
 
 fs.writeFileSync("movies.json", JSON.stringify(movies, null, 2));
   res.send("Movie upload ho gayi.");
