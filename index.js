@@ -71,7 +71,8 @@ app.post("/login", async (req, res) => {
   let users = getUsers();
 
 console.log(users);
-console.log("USERNAME:", username);  
+console.log("USERNAME:", username); 
+console.log(users.map(u => `"${u.username}"`)); 
 const user = users.find(u => u.username === username);
 
   if (!user) {
