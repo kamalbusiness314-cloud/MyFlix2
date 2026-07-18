@@ -127,7 +127,6 @@ if (req.session.user !== "admin") {
   return res.send("Upload sirf Admin kar sakta hai");
 }
 console.log(req.file);
-  res.send("Movie upload ho gayi.");
 const movies = fs.existsSync("movies.json")
   ? JSON.parse(fs.readFileSync("movies.json", "utf8"))
   : [];
@@ -138,6 +137,7 @@ movies.push({
 });
 
 fs.writeFileSync("movies.json", JSON.stringify(movies, null, 2));
+  res.send("Movie upload ho gayi.");
 });
 app.get("/admin", (req, res) => {
   if (!req.session.user) {
