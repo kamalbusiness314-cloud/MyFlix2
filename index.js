@@ -83,7 +83,7 @@ const user = users.find(u => u.username === username);
   }
 
   const match = await bcrypt.compare(password, user.password);
-console.log(JSON.stringify(password));
+console.log(password.split(""));
 console.log(password.length);
 console.log(match);
 
