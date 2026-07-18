@@ -15,6 +15,7 @@ const USERS_FILE = path.join(__dirname, "users.json");
 
 console.log("USERS_FILE:", USERS_FILE);
 console.log("EXISTS:", fs.existsSync(USERS_FILE));
+console.log("USERS:", JSON.parse(fs.readFileSync(USERS_FILE, "utf8")));
 app.use(express.json());
 
 app.use(session({
